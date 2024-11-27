@@ -56,12 +56,12 @@
         <!-- คอลัมน์สถานะ -->
         <template v-slot:[`item.has_used_drugs`]="{ item }">
           <v-chip
-            :color="item.has_used_drugs ? 'error' : 'success'"
+            :color="item.has_used_drugs == 'เคย' ? 'error' : 'success'"
             small
             label
             class="status-chip"
           >
-            {{ item.has_used_drugs ? 'เคย' : 'ไม่เคย' }}
+            {{ item.has_used_drugs == 'เคย' ? 'เคย' : 'ไม่เคย' }}
           </v-chip>
         </template>
 
@@ -174,53 +174,73 @@
     </v-dialog>
   </v-container>
 </template>
+
 <script>
+import { ref, reactive } from 'vue'
 import axios from 'axios'
 
 export default {
-  data() {
-    return {
-      searchQuery: '',
-      drugRecords: [],
-      tableHeaders: [
-        { text: 'ชื่อ', value: 'first_name' },
-        { text: 'นามสกุล', value: 'last_name' },
-        { text: 'เลขบัตรประชาชน', value: 'id_card' },
-        { text: 'สถานะการใช้ยา', value: 'has_used_drugs' },
-        { text: 'การกระทำ', value: 'actions', sortable: false },
-      ],
-      dialog: false,
-      selectedRecord: {},
-    }
-  },
-  methods: {
-    async fetchData() {
+  setup() {
+    const searchQuery = ref('')
+    const drugRecords = ref([])
+    const dialog = ref(false)
+    const selectedRecord = reactive({})
+    const loading = ref(false)
+
+    const tableHeaders = [
+      { text: 'ชื่อ', value: 'first_name' },
+      { text: 'นามสกุล', value: 'last_name' },
+      { text: 'เลขบัตรประชาชน', value: 'id_card' },
+      { text: 'สถานะการใช้ยา', value: 'has_used_drugs' },
+      { text: 'การกระทำ', value: 'actions', sortable: false },
+    ]
+
+    const fetchData = async () => {
+      loading.value = true
       try {
-        const response = await axios.get('/api/drug-survey', {
-          params: { query: this.searchQuery },
+        const response = await axios.get('http://localhost:3000/api/drug-survey', {
+          // const response = await axios.get('/api/drug-survey', {
+          params: { query: searchQuery.value },
         })
+
         if (response.data.success) {
-          this.drugRecords = response.data.data.map((record) => ({
+          console.log(response.data.data)
+          drugRecords.value = response.data.data.map((record) => ({
             ...record,
             address: JSON.parse(record.address || '{}'),
           }))
         } else {
-          this.drugRecords = []
+          drugRecords.value = []
         }
       } catch (error) {
         console.error('Error fetching data:', error)
+      } finally {
+        loading.value = false
       }
-    },
-    viewDetails(item) {
-      this.selectedRecord = {
+    }
+
+    const viewDetails = (item) => {
+      Object.assign(selectedRecord, {
         ...item,
         drug_types: JSON.parse(item.drug_types || '[]'),
-      }
-      this.dialog = true
-    },
+      })
+      dialog.value = true
+    }
+
+    return {
+      searchQuery,
+      drugRecords,
+      tableHeaders,
+      dialog,
+      selectedRecord,
+      loading,
+      fetchData,
+      viewDetails,
+    }
   },
 }
 </script>
+
 
 <style scoped>
 .text-h5 {
