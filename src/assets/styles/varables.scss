@@ -1,0 +1,32 @@
+// src/assets/styles/variables.scss
+$primary-color: #1867c0;
+$secondary-color: #5cbbf6;
+$error-color: #ff5252;
+$success-color: #4caf50;
+$warning-color: #ffc107;
+
+// src/assets/styles/main.scss
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap');
+
+body {
+  font-family: 'Kanit', sans-serif;
+}
+
+.v-application {
+  .text-h1,
+  .text-h2,
+  .text-h3,
+  .text-h4,
+  .text-h5,
+  .text-h6 {
+    font-family: 'Kanit', sans-serif !important;
+  }
+}
+
+.v-card {
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
