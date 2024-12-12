@@ -1,5 +1,71 @@
 <template>
   <v-card class="mb-4">
+    <!-- ตัวเลือกค้นหาที่อยู่ -->
+
+    <v-card-title>ค้นหาตามพื้นที่</v-card-title>
+    <v-card-text>
+      <v-row>
+        <!-- Province -->
+        <v-col cols="12" md="3">
+          <v-select
+            v-model="searchForm.province"
+            :items="provinces"
+            label="จังหวัด"
+            :loading="loading"
+            outlined
+            dense
+            clearable
+          />
+        </v-col>
+
+        <!-- Amphoe -->
+        <v-col cols="12" md="3">
+          <v-select
+            v-model="searchForm.amphoe"
+            :items="amphoes"
+            label="อำเภอ"
+            :loading="loading"
+            :disabled="!searchForm.province"
+            outlined
+            dense
+            clearable
+          />
+        </v-col>
+
+        <!-- Tambon -->
+        <v-col cols="12" md="3">
+          <v-select
+            v-model="searchForm.tambon"
+            :items="tambons"
+            label="ตำบล"
+            :loading="loading"
+            :disabled="!searchForm.amphoe"
+            outlined
+            dense
+            clearable
+          />
+        </v-col>
+
+        <!-- Moo -->
+        <v-col cols="12" md="3">
+          <v-text-field
+            v-model="searchForm.moo"
+            label="หมู่"
+            type="number"
+            outlined
+            dense
+            clearable
+          />
+        </v-col>
+
+        <!-- House No -->
+        <v-col cols="12" md="3">
+          <v-text-field v-model="searchForm.house_no" label="บ้านเลขที่" outlined dense clearable />
+        </v-col>
+      </v-row>
+      <v-btn color="primary" @click="searchData" :loading="loading" class="mr-2">ค้นหา</v-btn>
+    </v-card-text>
+
     <v-card-title>ค้นหาข้อมูลบุคคล</v-card-title>
     <v-card-text>
       <!-- Search Input -->
@@ -122,10 +188,12 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, reactive, onMounted } from 'vue'
 import { searchService } from '@/services/searchService'
 import { formatIdCard, formatFullName, formatAddress, getInitials } from '@/utils/formatters'
 import { parseAddress } from '@/utils/addressParser'
+
+const Urlbase = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000'
 
 const emit = defineEmits(['select'])
 
@@ -136,6 +204,125 @@ const selectedPerson = ref(null)
 const showResults = ref(false)
 const isSearching = ref(false)
 
+const type_search = ref('person')
+
+const searchForm = reactive({
+  province: '',
+  amphoe: '',
+  tambon: '',
+  moo: '',
+  house_no: '',
+})
+const provinces = ref([])
+const amphoes = ref([])
+const tambons = ref([])
+const totalItems = ref(0)
+const loading = ref(false)
+const options = reactive({})
+// Watch province changes
+watch(
+  () => searchForm.province,
+  async (newProvince) => {
+    searchForm.amphoe = ''
+    searchForm.tambon = ''
+    amphoes.value = []
+    tambons.value = []
+    if (newProvince) {
+      loading.value = true
+      try {
+        const encodedProvince = encodeURIComponent(newProvince)
+        const response = await fetch(Urlbase + `/api/amphoes?province=${encodedProvince}`)
+        const data = await response.json()
+        if (data.success && Array.isArray(data.data)) {
+          amphoes.value = data.data
+        }
+      } catch (error) {
+        console.error('Error loading amphoes:', error)
+      } finally {
+        loading.value = false
+      }
+    }
+  }
+)
+
+// Watch amphoe changes
+watch(
+  () => searchForm.amphoe,
+  async (newAmphoe) => {
+    searchForm.tambon = ''
+    tambons.value = []
+    if (searchForm.province && newAmphoe) {
+      loading.value = true
+      try {
+        const encodedProvince = encodeURIComponent(searchForm.province)
+        const encodedAmphoe = encodeURIComponent(newAmphoe)
+        const response = await fetch(
+          Urlbase + `/api/tambons?province=${encodedProvince}&amphoe=${encodedAmphoe}`
+        )
+        const data = await response.json()
+        if (data.success && Array.isArray(data.data)) {
+          tambons.value = data.data
+        }
+      } catch (error) {
+        console.error('Error loading tambons:', error)
+      } finally {
+        loading.value = false
+      }
+    }
+  }
+)
+
+// Load provinces
+const loadProvinces = async () => {
+  try {
+    const response = await fetch(Urlbase + '/api/provinces')
+    const data = await response.json()
+    provinces.value = data.data
+  } catch (error) {
+    console.error('Error loading provinces:', error)
+  }
+}
+
+// Search data
+const searchData = async () => {
+  loading.value = true
+  try {
+    const filteredForm = Object.entries(searchForm).reduce((acc, [key, value]) => {
+      if (value) {
+        acc[key] = value
+      }
+      return acc
+    }, {})
+    const params = new URLSearchParams({
+      ...filteredForm,
+      page: options.page || 1,
+      limit: options.itemsPerPage || 10,
+    })
+    const response = await fetch(Urlbase + `/api/area-search?${params}`)
+    const data = await response.json()
+    if (data.success) {
+      console.log(data.data)
+      searchResults.value = data.data
+      totalItems.value = data.data.length
+
+      if (searchResults.value.length === 0) {
+        // showNotification('ไม่พบข้อมูลที่ค้นหา', 'info')
+      } else {
+        // showNotification(`พบข้อมูล ${totalItems.value} รายการ`, 'success')
+      }
+    } else {
+      throw new Error(data.message || 'เกิดข้อผิดพลาดในการค้นหา')
+    }
+  } catch (error) {
+    console.error('Error searching:', error)
+    searchResults.value = []
+    totalItems.value = 0
+    // showNotification(`เกิดข้อผิดพลาด: ${error.message}`, 'error')
+  } finally {
+    loading.value = false
+  }
+}
+
 // Methods
 const performSearch = async () => {
   if (!searchQuery.value?.trim()) return
@@ -143,13 +330,24 @@ const performSearch = async () => {
   try {
     isSearching.value = true
     showResults.value = true
+    // ถ้าค้นที่อยู่่ ใช้ searchService.searchAddress
 
-    const results = await searchService.searchPerson(searchQuery.value)
-    searchResults.value = results.data
+    if (type_search.value === 'person') {
+      const results = await searchService.searchPerson(searchQuery.value)
+      searchResults.value = results.data
 
-    if (results.data.length === 1) {
-      // Auto select if only one result
-      selectPerson(results.data[0])
+      if (results.data.length === 1) {
+        // Auto select if only one result
+        selectPerson(results.data[0])
+      }
+    } else {
+      const results = await searchService.searchAddress(searchQuery.value)
+      searchResults.value = results.data
+
+      if (results.data.length === 1) {
+        // Auto select if only one result
+        selectPerson(results.data[0])
+      }
     }
   } catch (error) {
     console.error('Search failed:', error)
@@ -158,6 +356,11 @@ const performSearch = async () => {
     isSearching.value = false
   }
 }
+
+// Load initial data
+onMounted(() => {
+  loadProvinces()
+})
 
 // // Debounced search
 // const handleSearch = debounce(async (value) => {
@@ -175,14 +378,14 @@ const selectPerson = (person) => {
   const parsedAddress = parseAddress(person.address)
 
   // Emit ข้อมูลทั้งหมดที่ต้องการ map ไปยังฟอร์ม
+
   emit('select', {
     personalInfo: {
       first_name: person.fname,
       last_name: person.lname,
       fullName: formatFullName(person.fname, person.lname),
       age: person.age || '',
-      sex: person.sex || '',
-      id_card: person.pid,
+      idCard: person.pid,
       address: {
         houseNo: parsedAddress?.houseNo || '',
         moo: parsedAddress?.moo || '',

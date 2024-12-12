@@ -78,53 +78,6 @@
               </v-form>
             </v-card-text>
           </v-card>
-
-          <!-- Test Accounts Card -->
-          <v-card class="mt-6 info-card">
-            <v-card-text>
-              <div class="d-flex align-center mb-4">
-                <v-icon color="info" class="mr-2">mdi-information</v-icon>
-                <span class="text-h6">ข้อมูลทดลองใช้งาน</span>
-              </div>
-              <v-divider class="mb-4"></v-divider>
-              <div class="account-info">
-                <div class="account-type mb-4">
-                  <div class="text-subtitle-1 font-weight-bold mb-2">
-                    <v-icon small color="success" class="mr-1">mdi-account</v-icon>
-                    ผู้ใช้ทั่วไป
-                  </div>
-                  <div class="account-details">
-                    <code>Username: npd</code>
-                    <code>Password: 1632</code>
-                  </div>
-                </div>
-                <div class="account-type">
-                  <div class="text-subtitle-1 font-weight-bold mb-2">
-                    <v-icon small color="error" class="mr-1">mdi-shield-account</v-icon>
-                    ผู้ดูแลระบบ
-                  </div>
-                  <div class="account-details">
-                    <code>Username: admin</code>
-                    <code>Password: adminnpd</code>
-                  </div>
-                </div>
-              </div>
-            </v-card-text>
-          </v-card>
-
-          <!-- Contact Info -->
-          <v-card class="mt-4 info-card">
-            <v-card-text class="text-center">
-              <div class="text-subtitle-1 font-weight-bold mb-2">
-                <v-icon color="primary" class="mr-1">mdi-headphones</v-icon>
-                ติดต่อสอบถาม
-              </div>
-              <div class="text-body-1">
-                <div>โทร: 042-xxx-xxx</div>
-                <div>Email: admin@example.com</div>
-              </div>
-            </v-card-text>
-          </v-card>
         </div>
       </v-col>
     </v-row>
@@ -150,13 +103,6 @@ const showPassword = ref(false)
 const rememberMe = ref(false)
 const usernameError = ref('')
 const passwordError = ref('')
-
-// Features List
-const features = [
-  { icon: 'mdi-database-lock', text: 'ระบบจัดการข้อมูลที่ปลอดภัย' },
-  { icon: 'mdi-chart-box', text: 'รายงานสถิติแบบเรียลไทม์' },
-  { icon: 'mdi-account-group', text: 'จัดการข้อมูลผู้เกี่ยวข้อง' },
-]
 
 // Methods
 const clearErrors = () => {

@@ -13,4 +13,17 @@ export const searchService = {
       throw new Error('ไม่สามารถค้นหาข้อมูลได้')
     }
   },
+  //search จาก ทีอยู่
+  async searchAddress(query) {
+    try {
+      // ส่งค่า query ไปที่ api ด้วย params ชื่อ keyword
+      const response = await api.get('/area-search', {
+        params: { keyword: query },
+      })
+
+      return response.data
+    } catch (error) {
+      throw new Error('ไม่สามารถค้นหาข้อมูลได้')
+    }
+  },
 }

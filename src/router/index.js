@@ -6,26 +6,29 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
+    meta: { requiresAuth: true }, // ต้องล็อกอินก่อน
     children: [
       {
         path: 'dashboard',
         name: 'Dashboard',
+        meta: { requiresAuth: true },
+
         component: () => import('@/views/dashboard/DashboardView.vue'),
       },
-      {
-        path: '',
-        name: 'แบบฟอร์มบันทึกข้อมูลเกี่ยวกข้องกับยาเสพติด',
-        component: () => import('@/views/forms/DrugFormNew.vue'),
-      },
+
       {
         path: '/form-drug',
         name: 'แบบฟอร์มบันทึกข้อมูลเกี่ยวกข้องกับยาเสพติด',
+        meta: { requiresAuth: true },
+
         component: () => import('@/views/forms/DrugForm.vue'),
         // icon ใหม่
       },
       {
         path: '/list-drug',
         name: 'รายการบุคคลเกี่ยวข้องยาเสพติด (X-Ray)',
+        meta: { requiresAuth: true },
+
         component: () => import('@/views/forms/DrugSearchList.vue'),
       },
 
@@ -40,6 +43,7 @@ const routes = [
       {
         path: 'reports-summary1',
         name: 'บันทึกข้อมูลผู้เกี่ยวข้องกับยาเสพติด (Google Sheets) จ.สกลนคร',
+
         meta: {
           externalLink:
             'https://docs.google.com/spreadsheets/d/16x7airE029Jz54eYZ07OtJsrH4JQsUzUNkPX_thZcyw/edit#gid=0',
@@ -48,6 +52,7 @@ const routes = [
       {
         path: 'reports-summary3',
         name: 'บัญชีขึ้นทะเบียนผู้ค้า ภ.4',
+
         meta: {
           externalLink:
             'https://docs.google.com/spreadsheets/d/1W1cGIz_WLXbHsEQ3aKf4MoCnL69QJLF0H0t7kXCCKzk/edit?gid=1529821866#gid=1529821866',
@@ -56,6 +61,7 @@ const routes = [
       {
         path: 'reports-summary3',
         name: 'บัญชีขึ้นทะเบียนผู้ค้า ภ.4',
+
         meta: {
           externalLink:
             'https://docs.google.com/spreadsheets/d/1W1cGIz_WLXbHsEQ3aKf4MoCnL69QJLF0H0t7kXCCKzk/edit?gid=1529821866#gid=1529821866',

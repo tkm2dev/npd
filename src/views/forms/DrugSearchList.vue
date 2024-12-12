@@ -198,7 +198,7 @@ export default {
     const fetchData = async () => {
       loading.value = true
       try {
-        const response = await axios.get('http://localhost:3000/api/drug-survey', {
+        const response = await axios.get('/api/drug-survey', {
           // const response = await axios.get('/api/drug-survey', {
           params: { query: searchQuery.value },
         })
