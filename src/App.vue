@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <router-view></router-view>
-
     <!-- Global Loader -->
     <v-overlay v-model="loading" class="align-center justify-center">
       <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
@@ -40,55 +39,5 @@ html {
 
 body {
   font-family: 'Sarabun', sans-serif;
-}
-
-:root {
-  --primary-color: #1976d2;
-  --error-color: #ff5252;
-  --success-color: #4caf50;
-  --warning-color: #fb8c00;
-  --info-color: #2196f3;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-/* Utility classes */
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.text-truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Print styles */
-@media print {
-  .v-navigation-drawer,
-  .v-app-bar {
-    display: none !important;
-  }
-
-  .v-main {
-    padding: 0 !important;
-  }
 }
 </style>

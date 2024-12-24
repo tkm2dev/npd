@@ -17,8 +17,10 @@ export const searchService = {
   async searchAddress(query) {
     try {
       // ส่งค่า query ไปที่ api ด้วย params ชื่อ keyword
+      // fetch(Urlbase + `/api/area-search?${params}`)
+      console.log('query', query)
       const response = await api.get('/area-search', {
-        params: { keyword: query },
+        params: { query },
       })
 
       return response.data

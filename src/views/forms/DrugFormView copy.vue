@@ -93,9 +93,9 @@
           <!-- ประวัติการเสพ -->
           <v-stepper-window-item :value="2">
             <v-card-text>
-              <v-radio-group v-model="formData.hasUsedDrugs" label="เคยเสพยาเสพติดหรือไม่" required>
-                <v-radio label="เคย" :value="true"></v-radio>
-                <v-radio label="ไม่เคย" :value="false"></v-radio>
+              <v-radio-group v-model="formData.hasUsedDrugs" label="พบเสพยาเสพติดหรือไม่" required>
+                <v-radio label="พบ" :value="true"></v-radio>
+                <v-radio label="ไม่พบ" :value="false"></v-radio>
               </v-radio-group>
 
               <template v-if="formData.hasUsedDrugs">

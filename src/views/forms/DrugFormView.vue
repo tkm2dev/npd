@@ -149,12 +149,12 @@
                   <v-col cols="12">
                     <v-radio-group
                       v-model="formData.hasUsedDrugs"
-                      label="เคยเสพยาเสพติดหรือไม่"
+                      label="พบเสพยาเสพติดหรือไม่"
                       :rules="rules.required"
                       required
                     >
-                      <v-radio label="เคย" :value="true"></v-radio>
-                      <v-radio label="ไม่เคย" :value="false"></v-radio>
+                      <v-radio label="พบ" :value="true"></v-radio>
+                      <v-radio label="ไม่พบ" :value="false"></v-radio>
                     </v-radio-group>
                   </v-col>
                 </v-row>
@@ -693,16 +693,16 @@
               <v-row>
                 <v-col cols="12" md="6">
                   <v-radio-group
-                    v-model="formData.เคยเสพ"
+                    v-model="formData.พบเสพ"
                     row
                     :rules="[(v) => v !== null || 'กรุณาเลือกข้อมูล']"
                   >
-                    <v-radio label="เคย" :value="true"></v-radio
-                    ><v-radio label="ไม่เคย" :value="false"></v-radio
+                    <v-radio label="พบ" :value="true"></v-radio
+                    ><v-radio label="ไม่พบ" :value="false"></v-radio
                   ></v-radio-group>
                 </v-col>
 
-                <v-col cols="12" md="6" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="6" v-if="formData.พบเสพ">
                   <v-select
                     v-model="formData.ประเภทยา"
                     :items="['ยาบ้า', 'ยาไอซ์', 'กัญชา', 'อื่นๆ']"
@@ -713,7 +713,7 @@
                   ></v-select>
                 </v-col>
 
-                <v-col cols="12" md="6" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="6" v-if="formData.พบเสพ">
                   <v-text-field
                     v-model="formData.เริ่มเสพ"
                     label="เริ่มเสพตั้งแต่เมื่อไหร่"
@@ -722,7 +722,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="6" v-if="formData.พบเสพ">
                   <v-text-field
                     v-model="formData.จำนวนเสพ.ต่อครั้ง"
                     label="จำนวนที่เสพต่อครั้ง"
@@ -732,7 +732,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="6" v-if="formData.พบเสพ">
                   <v-text-field
                     v-model="formData.จำนวนเสพ.ความถี่"
                     label="ความถี่ในการเสพ"
@@ -741,7 +741,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="6" v-if="formData.พบเสพ">
                   <v-select
                     v-model="formData.แรงจูงใจ"
                     :items="[
@@ -759,11 +759,11 @@
                   ></v-select>
                 </v-col>
 
-                <v-col cols="12" v-if="formData.เคยเสพ">
+                <v-col cols="12" v-if="formData.พบเสพ">
                   <v-subheader>รับ/ซื้อยาจากใครบ้าง</v-subheader>
                 </v-col>
 
-                <v-col cols="12" md="4" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="4" v-if="formData.พบเสพ">
                   <v-text-field
                     v-model="formData.แหล่งที่มา[0]"
                     label="แหล่งที่มา 1"
@@ -772,7 +772,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="4" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="4" v-if="formData.พบเสพ">
                   <v-text-field
                     v-model="formData.แหล่งที่มา[1]"
                     label="แหล่งที่มา 2"
@@ -781,7 +781,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="4" v-if="formData.เคยเสพ">
+                <v-col cols="12" md="4" v-if="formData.พบเสพ">
                   <v-text-field
                     v-model="formData.แหล่งที่มา[2]"
                     label="แหล่งที่มา 3"
@@ -793,7 +793,7 @@
             </v-card-text>
           </v-card>
 
-          <v-card elevation="2" class="mb-6" v-if="formData.เคยเสพ">
+          <v-card elevation="2" class="mb-6" v-if="formData.พบเสพ">
             <v-toolbar color="deep-orange darken-1" dark flat>
               <v-toolbar-title>
                 <v-icon left>mdi-account-multiple</v-icon>
@@ -1281,12 +1281,12 @@
                       <v-row dense>
                         <v-col cols="12">
                           <div class="info-text">
-                            เคยเสพยาเสพติดหรือไม่:
-                            <strong>{{ formData.usage ? 'เคย' : 'ไม่เคย' }}</strong>
+                            พบเสพยาเสพติดหรือไม่:
+                            <strong>{{ formData.usage ? 'พบ' : 'ไม่พบ' }}</strong>
                           </div>
                         </v-col>
 
-                        <template v-if="formData.เคยเสพ">
+                        <template v-if="formData.พบเสพ">
                           <v-col cols="12">
                             <div class="info-text">
                               ประเภทยาเสพติด:
@@ -1337,7 +1337,7 @@
                   </div>
 
                   <!-- ส่วนที่ 3: ข้อมูลผู้ขาย -->
-                  <template v-if="formData.เคยเสพ">
+                  <template v-if="formData.พบเสพ">
                     <div class="section-container mb-8">
                       <div class="section-header">
                         <h3 class="text-h6 font-weight-bold mb-4">3. ข้อมูลผู้ขาย</h3>
@@ -1420,7 +1420,7 @@
     <v-dialog v-model="uiState.showConfirmNoHistory" max-width="400">
       <v-card>
         <v-card-title>ยืนยันการบันทึกข้อมูล</v-card-title>
-        <v-card-text> ท่านต้องการบันทึกข้อมูลกรณีไม่เคยเสพยาเสพติดใช่หรือไม่? </v-card-text>
+        <v-card-text> ท่านต้องการบันทึกข้อมูลกรณีไม่พบเสพยาเสพติดใช่หรือไม่? </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="grey-darken-1" variant="text" @click="uiState.showConfirmNoHistory = false">

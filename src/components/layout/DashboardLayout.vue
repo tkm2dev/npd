@@ -109,12 +109,23 @@
           ></v-list-item>
         </template>
 
-        <!-- Reports Section -->
         <v-divider class="my-4"></v-divider>
-        <v-list-subheader>รายงาน</v-list-subheader>
+        <v-list-subheader>จังหวัด สกลนคร</v-list-subheader>
 
         <v-list-item
-          v-for="item in reportMenuItems"
+          v-for="item in reportMenuItems_sk"
+          :key="item.title"
+          :to="item.to"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :value="item.title"
+          rounded="lg"
+          class="mb-1 menu-item"
+        ></v-list-item>
+        <v-list-subheader>จังหวัด นครพนม</v-list-subheader>
+
+        <v-list-item
+          v-for="item in reportMenuItems_np"
           :key="item.title"
           :to="item.to"
           :prepend-icon="item.icon"
@@ -124,7 +135,20 @@
           class="mb-1 menu-item"
         ></v-list-item>
       </v-list>
+      <!-- Reports Section -->
+      <v-divider class="my-4"></v-divider>
+      <v-list-subheader>ข้อมูลต้นแบบ </v-list-subheader>
 
+      <v-list-item
+        v-for="item in reportMenuItems"
+        :key="item.title"
+        :to="item.to"
+        :prepend-icon="item.icon"
+        :title="item.title"
+        :value="item.title"
+        rounded="lg"
+        class="mb-1 menu-item"
+      ></v-list-item>
       <!-- Bottom Section -->
       <template v-slot:append>
         <div class="pa-4">
@@ -198,7 +222,7 @@ const breadcrumbs = computed(() => {
     {
       title: 'หน้าหลัก',
       disabled: false,
-      to: '/form-drug',
+      to: '/',
     },
   ]
 
@@ -214,15 +238,10 @@ const breadcrumbs = computed(() => {
 
 // Menu Items
 const menuItems = [
-  {
-    title: 'รายการข้อมูลบุคคลที่ (X-Ray)',
-    icon: 'mdi-file-document-edit',
-    to: '/list-drug',
-  },
   // {
-  //   title: 'ค้นหาตามพื้นที่',
+  //   title: 'ภาพรวม',
   //   icon: 'mdi-file-document-edit',
-  //   to: '/test',
+  //   to: '/main-dashboard',
   // },
   // /form-drug
   {
@@ -230,13 +249,24 @@ const menuItems = [
     icon: 'mdi-file-document-edit',
     to: '/form-drug',
   },
+  {
+    title: 'รายการข้อมูลบุคคล(X-Ray)',
+    icon: 'mdi-file-document-edit',
+    to: '/list-drug',
+  },
+
+  {
+    title: 'ค้นหาบุคคล (พื้นที่ไข่แดง)',
+    icon: 'mdi-file-document-edit',
+    to: '/drug-search-red-zone',
+  },
 ]
 
 const adminMenuItems = [
   {
     title: 'แดชบอร์ด',
     icon: 'mdi-view-dashboard',
-    to: '/dashboard',
+    to: '/person-map',
   },
   {
     title: 'จัดการผู้ใช้',
@@ -252,35 +282,58 @@ const adminMenuItems = [
 
 const reportMenuItems = [
   {
-    title: 'การรายงาน จ.ร้อยเอ็ด',
+    title: 'ข้อมูลต้นแบบ ธวัชบุรีโมเดล จ.ร้อยเอ็ด',
     icon: 'mdi-chart-box',
-    to: '/reports-summary1',
+    to: '/npd-model',
   },
   {
-    title: 'การรายงาน จ.สกลนคร',
+    title: 'กระดานรวมลิงค์ข้อมูล การรายงาน จ.ร้อยเอ็ด',
     icon: 'mdi-chart-box',
     to: '/reports-summary1',
-  },
-  {
-    title: 'การรายงาน จ.นครพนม',
-    icon: 'mdi-chart-box',
-    to: '/reports-summary2',
   },
   {
     title: 'บัญชีขึ้นทะเบียนผู้ค้า ภ.4',
     icon: 'mdi-chart-box',
     to: '/reports-summary3',
   },
-  {
-    title: 'ข้อมูล ศูนย์อำนวยการป้องกันและปราบปรามยาเสพติด จังหวัดร้อยเอ็ด',
-    icon: 'mdi-chart-box',
-    to: '/reports-summary4',
-  },
+  // {
+  //   title: 'ข้อมูล ศูนย์อำนวยการป้องกันและปราบปรามยาเสพติด จังหวัดร้อยเอ็ด',
+  //   icon: 'mdi-chart-box',
+  //   to: '/reports-summary4',
+  // },
   // {
   //   title: 'รายงานสถิติ',
   //   icon: 'mdi-chart-bar',
   //   to: '/reports/stats',
   // },
+]
+
+// เมนู สกลนคร
+const reportMenuItems_sk = [
+  {
+    title: 'ภาพรวม จ.สกลนคร',
+    icon: 'mdi-chart-box',
+    to: '/report-sakon-nakhon-dashboard',
+  },
+  {
+    title: 'แบบรายงาน จ.สกลนคร',
+    icon: 'mdi-chart-box',
+    to: 'report-sakon-nakhon',
+  },
+]
+
+// เมนู นครพนม
+const reportMenuItems_np = [
+  {
+    title: 'ภาพรวม จ.นครพนม',
+    icon: 'mdi-chart-box',
+    to: '/report-nakhon-phanom-dashboard',
+  },
+  {
+    title: 'แบบรายงาน จ.นครพนม',
+    icon: 'mdi-chart-box',
+    to: '/report-nakhon-phanom',
+  },
 ]
 
 const userMenuItems = [
@@ -329,7 +382,6 @@ const logout = async () => {
     line-height: 1.4;
     padding: 8px 0;
   }
-
   .v-list-item__content {
     white-space: normal !important;
   }

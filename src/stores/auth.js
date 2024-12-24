@@ -14,7 +14,7 @@ export const useAuthStore = defineStore('auth', () => {
   const users = {
     npd: {
       username: 'npd',
-      password: '1632',
+      password: '2339',
       role: 'user',
       name: 'ผู้ใช้ทั่วไป',
     },
@@ -30,13 +30,9 @@ export const useAuthStore = defineStore('auth', () => {
   const login = async (credentials) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log('Credentials received:', credentials) // ตรวจสอบค่าที่ส่งเข้ามา
         const foundUser = Object.values(users).find(
-          (user) => user.username === credentials.username,
+          (user) => user.username.toLowerCase() === credentials.username.toLowerCase(),
         )
-
-        console.log('Found User:', foundUser) // ตรวจสอบผู้ใช้ที่ค้นหาเจอ
-
         if (!foundUser) {
           reject(new Error('ชื่อผู้ใช้ไม่ถูกต้อง')) // ข้อผิดพลาดหากไม่พบผู้ใช้
           return

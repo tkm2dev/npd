@@ -126,7 +126,7 @@ const handleLogin = async () => {
     })
     console.log('Login successful') // แสดงข้อความเมื่อสำเร็จ
 
-    router.push('/')
+    router.push('/form-drug') // ส่งไปหน้า form-drug
   } catch (err) {
     error.value = err.message
   } finally {

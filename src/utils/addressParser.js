@@ -6,8 +6,8 @@ export const parseAddress = (addressString) => {
       houseNo: '',
       moo: '',
       tambon: '',
-      amphoe: 'ธวัชบุรี', // default value
-      province: 'ร้อยเอ็ด', // default value
+      amphoe: '', // default value
+      province: '', // default value
     }
 
     if (!addressString) return address
@@ -49,8 +49,8 @@ export const parseAddress = (addressString) => {
       houseNo: '',
       moo: '',
       tambon: '',
-      amphoe: 'ธวัชบุรี',
-      province: 'ร้อยเอ็ด',
+      amphoe: '',
+      province: '',
     }
   }
 }

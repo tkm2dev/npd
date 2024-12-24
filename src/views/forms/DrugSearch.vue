@@ -110,7 +110,7 @@ import { ref, reactive, onMounted, watch } from 'vue'
 
 //ถ้า production ให้เปลี่ยน Urlbase ให้เป็น url ของ production
 
-const Urlbase = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000'
+const Urlbase = process.env.NODE_ENV === 'production' ? '' : 'https://npd.mazcat.net'
 
 const searchForm = reactive({
   province: '',

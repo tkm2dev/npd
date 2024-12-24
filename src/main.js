@@ -7,6 +7,8 @@ import vuetify from './plugins/vuetify'
 
 // Styles
 import '@mdi/font/css/materialdesignicons.css'
+import 'leaflet/dist/leaflet.css'
+
 import 'vuetify/styles'
 
 import VueApexCharts from 'vue3-apexcharts'

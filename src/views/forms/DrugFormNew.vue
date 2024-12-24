@@ -129,16 +129,16 @@
             <v-row>
               <v-col cols="12">
                 <v-radio-group
-                  v-model="formData.เคยเสพ"
-                  label="เคยเสพยาเสพติดหรือไม่"
+                  v-model="formData.พบเสพ"
+                  label="พบเสพยาเสพติดหรือไม่"
                   :rules="[(v) => v !== null || 'กรุณาเลือกตัวเลือก']"
                 >
-                  <v-radio label="เคย" value="เคย"></v-radio>
-                  <v-radio label="ไม่เคย" value="ไม่เคย"></v-radio>
+                  <v-radio label="พบ" value="พบ"></v-radio>
+                  <v-radio label="ไม่พบ" value="ไม่พบ"></v-radio>
                 </v-radio-group>
               </v-col>
             </v-row>
-            <v-row v-if="formData.เคยเสพ === 'เคย'">
+            <v-row v-if="formData.พบเสพ === 'พบ'">
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="formData.ประเภทยาเสพติด"
@@ -612,7 +612,7 @@ const formatAddress = (address) => {
 }
 
 // watch(
-//   () => formData.value.เคยเสพ,
+//   () => formData.value.พบเสพ,
 //   (newVal) => {
 //     if (!newVal) {
 //       dealerSearchQuery.value = ''
@@ -634,15 +634,15 @@ const saveData = async () => {
   }
 
   // ตรวจสอบข้อมูลผู้ขาย
-  if (formData.value.เคยเสพ && !validateDealerData()) {
+  if (formData.value.พบเสพ && !validateDealerData()) {
     return
   }
 
   try {
     isSaving.value = true
 
-    // ตั้งค่าข้อมูลเมื่อเลือก "ไม่เคย" เสพยา
-    if (formData.value.เคยเสพ === false) {
+    // ตั้งค่าข้อมูลเมื่อเลือก "ไม่พบ" เสพยา
+    if (formData.value.พบเสพ === false) {
       formData.value = {
         ...formData.value,
         ประเภทยา: [],
@@ -906,7 +906,7 @@ const formData = reactive({
     อำเภอ: '',
     จังหวัด: '',
   },
-  เคยเสพ: null,
+  พบเสพ: null,
   ประเภทยาเสพติด: '',
   จำนวนที่เสพ: '',
 })

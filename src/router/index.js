@@ -12,10 +12,17 @@ const routes = [
         path: 'dashboard',
         name: 'Dashboard',
         meta: { requiresAuth: true },
-
-        component: () => import('@/views/dashboard/DashboardView.vue'),
+        component: () => import('@/views/forms/DrugMap.vue'),
       },
-
+      {
+        path: '/person-map',
+        name: 'PersonMap',
+        meta: {
+          requiresAuth: true,
+          title: 'แผนที่แสดงตำแหน่งบุคคล',
+        },
+        component: () => import('@/views/forms/PersonMap.vue'),
+      },
       {
         path: '/form-drug',
         name: 'แบบฟอร์มบันทึกข้อมูลเกี่ยวกข้องกับยาเสพติด',
@@ -26,10 +33,18 @@ const routes = [
       },
       {
         path: '/list-drug',
-        name: 'รายการบุคคลเกี่ยวข้องยาเสพติด (X-Ray)',
+        name: 'รายการบุคคลเกี่ยวข้องยาเสพติด',
         meta: { requiresAuth: true },
 
         component: () => import('@/views/forms/DrugSearchList.vue'),
+      },
+
+      {
+        path: '/main-dashboard',
+        name: 'Dashboard',
+
+        component: () => import('@/views/forms/DrugDashboard.vue'),
+        // icon ใหม่
       },
 
       {
@@ -74,6 +89,52 @@ const routes = [
           externalLink:
             'https://lookerstudio.google.com/reporting/0be10b8d-da40-4ab6-ab20-87eebc6f27db/page/p_xzffj3msld',
         },
+      },
+      {
+        path: 'npd-model',
+        name: 'ข้อมูลต้นแบบ ธวัชบุรีโมเดล',
+        meta: {
+          externalLink:
+            'https://drive.google.com/drive/folders/1ffw1hNguctfN47Q1g0zGNPR_OC9g62NZ?usp=sharing',
+        },
+      },
+      // เพิ่ม เมนู แบบรายงานด้านปราบ - นครพนมโมเดล
+      {
+        path: 'report-nakhon-phanom',
+        name: 'แบบรายงานด้านปราบ-นครพนมโมเดล',
+        meta: {
+          externalLink:
+            'https://docs.google.com/spreadsheets/d/1PR92fubHHHhy-EWnlhIauXroetk1ryqRy41v4_4vbAs/edit?gid=393867346#gid=393867346',
+        },
+      },
+      {
+        path: 'report-sakon-nakhon',
+        name: 'แบบรายงานด้านปราบ-สกลนครโมเดล',
+        meta: {
+          externalLink:
+            'https://docs.google.com/spreadsheets/d/1rTfaUFfPlyj_P5rmeH9vi9SlU6BPMxV-BdR2tPJAy50/edit?gid=393867346#gid=393867346',
+        },
+      },
+      {
+        path: 'report-nakhon-phanom-dashboard',
+        name: 'Dashboard นครพนม',
+        meta: {
+          externalLink:
+            'https://lookerstudio.google.com/u/0/reporting/265f4e2a-3310-46dc-aea9-a7d87943efe1/page/Vm7WE',
+        },
+      },
+      {
+        path: 'report-sakon-nakhon-dashboard',
+        name: 'Dashboard สกลนคร',
+        meta: {
+          externalLink:
+            'https://lookerstudio.google.com/u/0/reporting/38155b76-1d84-4062-b818-2b968d066a77/page/Vm7WE',
+        },
+      },
+      {
+        path: '/drug-search-red-zone',
+        name: 'ค้นหาข้อมูลผู้เกี่ยวข้องยาเสพติด พื้นที่แดง',
+        component: () => import('@/views/forms/DrugSearchoRedZone.vue'),
       },
     ],
   },
